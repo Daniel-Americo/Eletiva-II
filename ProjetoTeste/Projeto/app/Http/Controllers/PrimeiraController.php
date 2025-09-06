@@ -168,5 +168,16 @@ class PrimeiraController extends Controller
         $valorDesc = $valor1 * ($valor2 / 100);
         $pFinal = $valor1 - $valorDesc;
         return "O preço com desconto é: $pFinal";
-    } 
+    }
+    
+    public function exercicio17() {
+        return view("exercicio17");
+    }
+    public function respexercicio17(request $request) {
+        $capital = $request->valor1;
+        $taxa = $request->valor2;
+        $periodo = $request->valor3;
+        $jurosSimples = $capital * ($taxa / 100) * $periodo;
+        return "O total de juros simples é: R$ $jurosSimples";
+    }  
 }
