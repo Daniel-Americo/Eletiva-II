@@ -50,4 +50,33 @@ class PrimeiraController extends Controller
             return "A divisão de $valor1 / $valor2 = $divisao";
         }
     }
+
+    public function exercicio5() {
+        return view("exercicio5");
+    }
+    public function respexercicio5(request $request) {
+        $valor1 = $request -> valor1;
+        $valor2 = $request -> valor2;
+        $valor3 = $request -> valor3;
+        $media = ($valor1 + $valor2 + $valor3) / 3;
+        return "A Media é: $media";
+    }
+
+    public function exercicio6() {
+        return view("exercicio6");
+    }
+    public function respexercicio6(request $request) {
+        $valor1 = $request -> valor1;
+        $f = ($valor1 * 9/5) + 32;
+        return "A conversão de $valor1 Celsius para $f Fahrenheit ";
+    }
+
+    public function exercicio7() {
+        return view("exercicio7");
+    }
+    public function respexercicio7(request $request) {
+        $valor1 = $request -> valor1;
+        $c = ($valor1 - 32) * 5/9;
+        return "A conversão de $valor1 Fahrenheit para $c Celsius ";
+    }
 }
