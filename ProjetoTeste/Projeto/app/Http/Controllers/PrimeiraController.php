@@ -158,4 +158,15 @@ class PrimeiraController extends Controller
         $imcArredondado = round($imc, 2);
         return "O IMC é: $imcArredondado";
     } 
+
+    public function exercicio16() {
+        return view("exercicio16");
+    }
+    public function respexercicio16(request $request) {
+        $valor1 = $request -> valor1;
+        $valor2 = $request -> valor2;
+        $valorDesc = $valor1 * ($valor2 / 100);
+        $pFinal = $valor1 - $valorDesc;
+        return "O preço com desconto é: $pFinal";
+    } 
 }
