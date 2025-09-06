@@ -127,4 +127,13 @@ class PrimeiraController extends Controller
         $r = $valor1 ** $valor2;
         return "O $valor1 elevado a $valor2 = $r";
     } 
+
+    public function exercicio13() {
+        return view("exercicio13");
+    }
+    public function respexercicio13(request $request) {
+        $valor1 = $request -> valor1;
+        $c = $valor1 * 100;
+        return "O $valor1 metros convertidos em $c centimetros";
+    } 
 }
