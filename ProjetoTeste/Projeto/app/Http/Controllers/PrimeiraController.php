@@ -145,4 +145,17 @@ class PrimeiraController extends Controller
         $m = $valor1 * 0.621371;
         return "O $valor1 Quilometros convertidos em $m milhas";
     } 
+
+
+    public function exercicio15() {
+        return view("exercicio15");
+    }
+    public function respexercicio15(request $request) {
+        $valor1 = $request -> valor1;
+        $valor2 = $request -> valor2;
+        $alturaEmMetros = $valor2 / 100;
+        $imc = $valor1 / ($alturaEmMetros * $alturaEmMetros);
+        $imcArredondado = round($imc, 2);
+        return "O IMC é: $imcArredondado";
+    } 
 }
