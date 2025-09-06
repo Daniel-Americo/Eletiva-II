@@ -136,4 +136,13 @@ class PrimeiraController extends Controller
         $c = $valor1 * 100;
         return "O $valor1 metros convertidos em $c centimetros";
     } 
+
+    public function exercicio14() {
+        return view("exercicio14");
+    }
+    public function respexercicio14(request $request) {
+        $valor1 = $request -> valor1;
+        $m = $valor1 * 0.621371;
+        return "O $valor1 Quilometros convertidos em $m milhas";
+    } 
 }
