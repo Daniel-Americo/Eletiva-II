@@ -179,5 +179,16 @@ class PrimeiraController extends Controller
         $periodo = $request->valor3;
         $jurosSimples = $capital * ($taxa / 100) * $periodo;
         return "O total de juros simples é: R$ $jurosSimples";
-    }  
+    }
+    
+    public function exercicio18() {
+        return view("exercicio18");
+    }
+    public function respexercicio18(request $request) {
+        $capital = $request->valor1;
+        $taxa = $request->valor2;
+        $periodo = $request->valor3;
+        $jurosCompostos = $capital * (1 + $taxa / 100) ** $periodo;
+        return "O total do montante com juros composto é: R$ $jurosCompostos";
+    } 
 }
