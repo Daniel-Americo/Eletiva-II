@@ -190,5 +190,17 @@ class PrimeiraController extends Controller
         $periodo = $request->valor3;
         $jurosCompostos = $capital * (1 + $taxa / 100) ** $periodo;
         return "O total do montante com juros composto é: R$ $jurosCompostos";
+    }
+
+    public function exercicio19() {
+        return view("exercicio19");
+    }
+    public function respexercicio19(request $request) {
+
+        $valor1 = $request->valor1;
+        $horas = $valor1 *24;
+        $minutos = $valor1 * 1440;
+        $segundos = $valor1 * 86400;
+        return "$valor1 Dias, convertidos são $horas horas:$minutos minutos:$segundos segundos.";
     } 
 }
