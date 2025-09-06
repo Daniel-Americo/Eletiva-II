@@ -203,4 +203,15 @@ class PrimeiraController extends Controller
         $segundos = $valor1 * 86400;
         return "$valor1 Dias, convertidos são $horas horas:$minutos minutos:$segundos segundos.";
     } 
+
+    public function exercicio20() {
+        return view("exercicio20");
+    }
+    public function respexercicio20(request $request) {
+        $valor1 = $request->valor1;
+        $valor2 = $request->valor2;
+        $vm = $valor1 / $valor2;
+        return "A velocidade media é: $vm km/h";
+
+    } 
 }
