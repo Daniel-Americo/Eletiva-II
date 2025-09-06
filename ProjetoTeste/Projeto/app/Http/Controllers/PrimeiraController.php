@@ -116,5 +116,15 @@ class PrimeiraController extends Controller
         $valor1 = $request -> valor1;
         $c = 2 * M_PI * $valor1;
         return "O perimetro do Circulo é $c ";
+    }
+    
+    public function exercicio12() {
+        return view("exercicio12");
+    }
+    public function respexercicio12(request $request) {
+        $valor1 = $request -> valor1;
+        $valor2 = $request -> valor2;
+        $r = $valor1 ** $valor2;
+        return "O $valor1 elevado a $valor2 = $r";
     } 
 }
