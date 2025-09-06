@@ -40,11 +40,14 @@ class PrimeiraController extends Controller
         return view("exercicio4");
     }
     public function respexercicio4(request $request) {
-        $valor1 = $request -> valor1;
         $valor2 = $request -> valor2;
-        if($valor2 = 0)
-            return " D
-        $soma = $valor1 * $valor2;
-        return "Subtração dos valores $valor1 * $valor2 = $soma";
+        if($valor2 == 0) {
+            return "ERROR, Impossivel dividir por 0!";
+        }
+        else {
+            $valor1 = $request -> valor1;
+            $divisao = $valor1 / $valor2;
+            return "A divisão de $valor1 / $valor2 = $divisao";
+        }
     }
 }
