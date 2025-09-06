@@ -1,18 +1,37 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PrimeiraController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\ClienteController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('clientes', ClienteController::class);
+//Listar Clientes - GET /clientes -- Route::get('/clientes', [ClienteController::class, 'index'])
+//Abrir formulário para inserir registro - GET /clientes/create -- [ClienteController::class, 'create']
+//Salvar dados - POST /clientes -- método store
+//Mostrar dados do registro - GET /clientes/{id_cliente} -- método show
+//Abrir formulário para editar registro - GET /clientes/{id_cliente}/edit --método edit
+//Salvar alterações - PUT /clientes/{id_cliente} -- método update
+//Excluir um registro - DELETE /clientes/{id_cliente} -- método destroy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Route::get('/teste', [PrimeiraController::class, "teste"]);
+
+Route::get('/exemplo', [PrimeiraController::class, "abrirForm"]);
+Route::post('/exemplo_resposta', [PrimeiraController::class, "resposta"]);
+
+Route::get("/exercicio2", [PrimeiraController::class, "exercicio2"]);
+Route::post("/resposta_exercicio2", [PrimeiraController::class, "respExercicio2"]);
+
