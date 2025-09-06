@@ -79,4 +79,33 @@ class PrimeiraController extends Controller
         $c = ($valor1 - 32) * 5/9;
         return "A conversão de $valor1 Fahrenheit para $c Celsius ";
     }
+
+    public function exercicio8() {
+        return view("exercicio8");
+    }
+    public function respexercicio8(request $request) {
+        $valor1 = $request -> valor1;
+        $valor2 = $request -> valor2;
+        $area = $valor1 * $valor2;
+        return "A area do retangulo é $area ";
+    }
+    
+    public function exercicio9() {
+        return view("exercicio9");
+    }
+    public function respexercicio9(request $request) {
+        $valor1 = $request -> valor1;
+        $area = M_PI *( $valor1 * $valor1); 
+        return "A area do circulo é $area ";
+    } 
+
+    public function exercicio10() {
+        return view("exercicio10");
+    }
+    public function respexercicio10(request $request) {
+        $valor1 = $request -> valor1;
+        $valor2 = $request -> valor2;
+        $p = 2 * ($valor1 + $valor2);
+        return "O perimetro do Retangulo é $p ";
+    } 
 }
