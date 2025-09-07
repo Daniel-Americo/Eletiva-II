@@ -12,7 +12,7 @@
 <form method="post" action="/respexercicio14">
     @CSRF
 <div class="mb-3">
-              <label for="valor1" class="form-label">Insira o valor em quilometros a serem convertidos</label>
+              <label for="valor1" class="form-label">Insira o valor em quilometros a serem convertidos em milhas</label>
               <input type="number" id="valor1" name="valor1" class="form-control" required="">
             </div>
 <button type="submit" class="btn btn-primary">Enviar</button>

@@ -15,7 +15,7 @@ Route::resource('clientes', ClienteController::class);
 //Excluir um registro - DELETE /clientes/{id_cliente} -- método destroy
 
 
-
+Route::get('/', [PrimeiraController::class, 'menu']);
 
 Route::get("/exercicio1", [PrimeiraController::class, "exercicio1"]);
 Route::post("/respexercicio1", [PrimeiraController::class, "respexercicio1"]);
