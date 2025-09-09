@@ -59,7 +59,7 @@ class ClienteController extends Controller
     public function edit(string $id) /**Crud Editar */
     {
         $cliente = Cliente::findOrFail($id);
-        return view("clientes.edit", comapct("cliente"));
+        return view("clientes.edit", compact("cliente"));
     }
 
     /**
@@ -70,7 +70,6 @@ class ClienteController extends Controller
         try {
             $cliente = Cliente::findOrFail($id);
             $cliente->update($request->all());
-            Cliente::create($request->all());
             return redirect()->route("clientes.index")
                     ->with("sucesso", "Registro Alterado!");
         } catch(\Exception $e){
@@ -92,13 +91,12 @@ class ClienteController extends Controller
         try {
                 $cliente = Cliente::findOrFail($id);
                 $cliente->delete();
-                Cliente::create($request->all());
                 return redirect()->route("clientes.index")
                         ->with("sucesso", "Registro Excluido!");
             } catch(\Exception $e){
                 Log::error("Erro ao excluir o registro do cliente! ".$e->getMessage(), [
                     'trace' => $e->getTraceAsString(),
-                    'request' => $request->all()
+                    'id' => $$id
                 ]);
                 return redirect()->route("clientes.index")
                         ->with("erro", "Erro ao Excluir!");
