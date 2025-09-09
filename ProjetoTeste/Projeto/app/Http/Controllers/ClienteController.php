@@ -20,7 +20,7 @@ class ClienteController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create() /**Crud criar */
     {
         return view("clientes.create");
     }
@@ -47,17 +47,19 @@ class ClienteController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id) /** View  */
     {
-        //
+        $cliente = Cliente::findOrFail($id);
+        return view("clientes.show", compact("cliente"));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id) /**Crud Editar */
     {
-        //
+        $cliente = Cliente::findOrFail($id);
+        return view("clientes.edit", comapct("cliente"));
     }
 
     /**
@@ -65,7 +67,20 @@ class ClienteController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $cliente = Cliente::findOrFail($id);
+            $cliente->update($request->all());
+            Cliente::create($request->all());
+            return redirect()->route("clientes.index")
+                    ->with("sucesso", "Registro Alterado!");
+        } catch(\Exception $e){
+            Log::error("Erro ao alterar o registro do cliente! ".$e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+                'request' => $request->all()
+            ]);
+            return redirect()->route("clientes.index")
+                    ->with("erro", "Erro ao Alterar!");
+        }
     }
 
     /**
@@ -73,6 +88,20 @@ class ClienteController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
+        try {
+                $cliente = Cliente::findOrFail($id);
+                $cliente->delete();
+                Cliente::create($request->all());
+                return redirect()->route("clientes.index")
+                        ->with("sucesso", "Registro Excluido!");
+            } catch(\Exception $e){
+                Log::error("Erro ao excluir o registro do cliente! ".$e->getMessage(), [
+                    'trace' => $e->getTraceAsString(),
+                    'request' => $request->all()
+                ]);
+                return redirect()->route("clientes.index")
+                        ->with("erro", "Erro ao Excluir!");
+            }
     }
 }
