@@ -3,48 +3,72 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-Use Illuminate\Support\Facades\Auth;
-Use Illuminate\Support\Facades\Log;
-Use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Exception;
 
 class AuthController extends Controller
 {
-    public function showFormLogin(){
-        return view("login");
+    // 🔹 Exibe o formulário de login
+    public function showFormLogin()
+    {
+        return view("clientes.login");
     }
 
-    public function showFormCadastro(){
-        return view('cadastro');
+    // 🔹 Exibe o formulário de cadastro
+    public function showFormCadastro()
+    {
+        return view('clientes.cadastrar');
     }
 
-    public function cadastrarUsuario(Request $request){
+    // 🔹 Cadastra novo usuário
+    public function cadastrarUsuario(Request $request)
+    {
         try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email',
+                'password' => 'required|confirmed|min:6',
+            ]);
+
             $dados = $request->all();
             $dados['password'] = Hash::make($dados['password']);
-            User::Create($dados);
-            return redirect()->route('login')->with("Sucesso", "Novo Usário Registrado");
+            User::create($dados);
 
-        } catch (Exception $e){
-            Log::error("Erro ao criar usuário: " .$e->getMessage(), [
+            return redirect()->route('login')->with("Sucesso", "Usuário cadastrado com sucesso!");
+        } catch (Exception $e) {
+            Log::error("Erro ao criar usuário: " . $e->getMessage(), [
                 'stack' => $e->getTraceAsString(),
                 'request' => $request->all()
             ]);
+
+            return back()->withErrors(['Erro ao cadastrar o usuário.']);
         }
     }
 
-    public function login(Request $request){
+    // 🔹 Realizar login
+    public function login(Request $request)
+    {
         $credenciais = $request->only('email', 'password');
 
         if (Auth::attempt($credenciais)) {
             $request->session()->regenerate();
-            return redirect()->route('inicial');
-        }else {
-            return redirect()->route('login')-> with('Erro', "Credenciais Inválidas!");
+            $user = Auth::user(); //agora é um objeto do tipo usuario que inclui nivel de usuario
+            if ($user->nivel =="ADM"){
+                return redirect()->intended("/inicial-adm");
+            } else if ($user->nivel == "CLI") {
+                return redirect()->intended("/inicial-cli");
+            }
+        } else {
+            return redirect()->route('login')->with('Erro', "Credenciais inválidas!");
         }
     }
 
-    public function logout(Request $request){
+    // 🔹 Faz logout
+    public function logout(Request $request)
+    {
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

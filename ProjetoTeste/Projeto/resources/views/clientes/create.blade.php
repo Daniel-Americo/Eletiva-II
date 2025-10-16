@@ -1,7 +1,8 @@
-@extends('layout')
+@extends('layouts.app')
 
-@section('conteudo')
+@section('title', 'Lista de Clientes')
 
+@section('content')
 <h1>Novo cliente</h1>
 <form method="post" action="/clientes">
     @CSRF

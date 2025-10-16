@@ -1,11 +1,12 @@
-@extends('layout')
+@extends('layouts.app')
 
-@section('conteudo')
+@section('title', 'Lista de Clientes')
 
+@section('content')
 <h1>Alterar Cliente</h1>
-<form method="post" action="/clientes/{{ $cliente->id }}">
+<form method="POST" action="{{ route('clientes.update', $cliente->id) }}">
     @CSRF
-    @METHOD('PUT')
+    @method('PUT')
     <div class="mb-3">
         <label for="nome" class="form-label">Informe o nome:</label>
         <input value="{{ $cliente -> nome }}" type="text" id="nome" name="nome" class="form-control" required="">

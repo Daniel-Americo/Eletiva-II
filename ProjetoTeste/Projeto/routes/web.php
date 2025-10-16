@@ -4,29 +4,35 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PrimeiraController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Middleware\NivelAdmMiddleware;
+use App\Http\Middleware\NivelCliMiddleware;
 
-Route::get('/login', [AuthController::class, 'showFormLogin'])->name('login'); //apelidado a rota de loguin
+
+// 🔐 Rotas de autenticação
+Route::get('/login', [AuthController::class, 'showFormLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/cadastrar', [AuthController::class, 'showFormCadastro']);
+Route::get('/cadastrar', [AuthController::class, 'showFormCadastro'])->name('cadastrar');
 Route::post('/cadastrar', [AuthController::class, 'cadastrarUsuario']);
+
+
 
 Route::middleware('auth')->group(function () {
     Route::resource('clientes', ClienteController::class);
-    Route::post("/logout", [AuthController::class], "logout");
-    Route::get('/inicial', function () { return view("inicial"); });
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::middleware([NivelAdmMiddleware::class])->group(function() {    
+        Route::get('/inicial-adm', function () { return view('clientes.inicial-adm'); })->name('inicial-adm');});
+   
+
+
+    Route::middleware([NivelCliMiddleware::class])->group(function() {
+        Route::get('/inicial-cli', function () { return view('clientes.inicial-cli'); })->name('inicial-cli');
+    });
+
 });
 
-
-//Listar Clientes - GET /clientes -- Route::get('/clientes', [ClienteController::class, 'index'])
-//Abrir formulário para inserir registro - GET /clientes/create -- [ClienteController::class, 'create']
-//Salvar dados - POST /clientes -- método store
-//Mostrar dados do registro - GET /clientes/{id_cliente} -- método show
-//Abrir formulário para editar registro - GET /clientes/{id_cliente}/edit --método edit
-//Salvar alterações - PUT /clientes/{id_cliente} -- método update
-//Excluir um registro - DELETE /clientes/{id_cliente} -- método destroy
-
-
+// Rota inicial padrão
 Route::get('/', [PrimeiraController::class, 'menu']);
 
 Route::get("/exercicio1", [PrimeiraController::class, "exercicio1"]);
@@ -88,4 +94,3 @@ Route::post("/respexercicio19", [PrimeiraController::class, "respexercicio19"]);
 
 Route::get("/exercicio20", [PrimeiraController::class, "exercicio20"]);
 Route::post("/respexercicio20", [PrimeiraController::class, "respexercicio20"]);
-

@@ -63,7 +63,7 @@ class ClienteController extends Controller
     {
         $categorias = Categoria::all();
         $cliente = Cliente::findOrFail($id);
-        return view("clientes.edit", compact("cliente", compact("clientes", "categorias")));
+        return view("clientes.edit", compact("cliente", "categorias"));
     }
 
     /**
@@ -100,7 +100,7 @@ class ClienteController extends Controller
             } catch(\Exception $e){
                 Log::error("Erro ao excluir o registro do cliente! ".$e->getMessage(), [
                     'trace' => $e->getTraceAsString(),
-                    'id' => $$id
+                    'id' => $id
                 ]);
                 return redirect()->route("clientes.index")
                         ->with("erro", "Erro ao Excluir!");
