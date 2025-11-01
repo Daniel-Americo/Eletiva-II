@@ -6,8 +6,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Middleware\NivelAdmMiddleware;
 use App\Http\Middleware\NivelCliMiddleware;
+use App\Http\Controllers\CarrinhoController;
+use App\Http\Controllers\InicialCliController;
 
-
+Route::get('/', [CarrinhoController::class, 'mostrarProdutos']);
 // 🔐 Rotas de autenticação
 Route::get('/login', [AuthController::class, 'showFormLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -23,17 +25,21 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware([NivelAdmMiddleware::class])->group(function() {    
         Route::get('/inicial-adm', function () { return view('clientes.inicial-adm'); })->name('inicial-adm');});
-   
 
-
+    
+   //Rotas que apenas clientes poderam usar
     Route::middleware([NivelCliMiddleware::class])->group(function() {
-        Route::get('/inicial-cli', function () { return view('clientes.inicial-cli'); })->name('inicial-cli');
+        Route::get('/inicial-cli',[InicialCliController::class, 'index']);
+        Route::get('/carrinho/add/{id}',[InicialCliController::class, 'adicionarCarrinho']);
+        Route::get('/carrinho/remover/{id}',[InicialCliController::class, 'removerCarrinho']);
+        Route::get('/carrinho/fechar',[InicialCliController::class, 'fecharPedido']);
+
     });
 
 });
 
 // Rota inicial padrão
-Route::get('/', [PrimeiraController::class, 'menu']);
+//Route::get('/', [PrimeiraController::class, 'menu']);
 
 Route::get("/exercicio1", [PrimeiraController::class, "exercicio1"]);
 Route::post("/respexercicio1", [PrimeiraController::class, "respexercicio1"]);
